@@ -1,9 +1,9 @@
 import type { Action } from 'svelte/action';
 
 export async function copyText(text: string) {
-    if ('clipboard' in navigator) {
-        await navigator.clipboard.writeText(text);
-    } else {
+    try {
+        await navigator?.clipboard?.writeText(text);
+    } catch (e) {
         /**
          * This is the fallback deprecated way of copying text to the clipboard. Only runs if it can't find the clipboard API.
          */
@@ -23,7 +23,12 @@ export async function copyText(text: string) {
 
         element.click();
         element.select();
-        document.execCommand('copy');
+
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            throw Error(err);
+        }
 
         document.body.removeChild(element);
     }

@@ -1,9 +1,9 @@
 {
   "name": "svelte-copy",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ghostdevv/svelte-copy.git"
+    "url": "git+https://github.com/ctrlsa/svelte-copy.git"
   },
   "license": "MIT",
   "bugs": {
