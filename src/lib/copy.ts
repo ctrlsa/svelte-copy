@@ -1,20 +1,20 @@
 import type { Action } from 'svelte/action';
 
-export async function copyText(text: string) {
+export function copyText(text: string) {
     return new Promise((t => {
         navigator.clipboard.writeText(text).then((() => {
-            t(text)
+            t(text);
         })).catch((() => {
-            const el = document.createElement("input");
+            const el = document.createElement('input');
 
-            el.style.opacity = "0",
-                el.style.position = "fixed",
+            el.style.opacity = '0',
+                el.style.position = 'fixed',
                 el.value = text,
                 document.body.appendChild(el),
                 el.select(),
-                document.execCommand("copy", !1, ""),
+                document.execCommand('copy', !1, ""),
                 el.remove(),
-                t(text)
+                t(text);
         }))
     }));
 }
