@@ -1,30 +1,19 @@
-export async function copyText(text) {
-    try {
-        await navigator?.clipboard?.writeText(text);
-    }
-    catch (e) {
-        /**
-         * This is the fallback deprecated way of copying text to the clipboard. Only runs if it can't find the clipboard API.
-         */
-        const element = document.createElement('input');
-        element.type = 'text';
-        element.disabled = true;
-        element.style.setProperty('position', 'fixed');
-        element.style.setProperty('z-index', '-100');
-        element.style.setProperty('pointer-events', 'none');
-        element.style.setProperty('opacity', '0');
-        element.value = text;
-        document.body.appendChild(element);
-        element.click();
-        element.select();
-        try {
-            document.execCommand('copy');
-        }
-        catch (err) {
-            throw Error(err);
-        }
-        document.body.removeChild(element);
-    }
+export function copyText(text) {
+    return new Promise((t => {
+        navigator.clipboard.writeText(text).then((() => {
+            t(text);
+        })).catch((() => {
+            const el = document.createElement('input');
+            el.style.opacity = '0',
+                el.style.position = 'fixed',
+                el.value = text,
+                document.body.appendChild(el),
+                el.select(),
+                document.execCommand('copy', !1, ""),
+                el.remove(),
+                t(text);
+        }));
+    }));
 }
 export const copy = (element, params) => {
     async function handle() {

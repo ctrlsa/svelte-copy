@@ -1,5 +1,6 @@
+/// <reference types="svelte" />
 import type { Action } from 'svelte/action';
-export declare function copyText(text: string): Promise<void>;
+export declare function copyText(text: string): Promise<unknown>;
 interface Parameters {
     text: string;
     events?: string | string[];
